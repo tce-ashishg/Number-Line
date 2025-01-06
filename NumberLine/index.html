@@ -1,0 +1,62 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NumberLine</title>
+    <script src="p5.js"></script>
+    <script src="controller.js"></script>
+    <script src="view.js"></script>
+    <script src="model.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    
+    <script defer>
+      //setup and draw canvas
+
+      let model;
+      let view;
+      let controller;
+      let checkBoxAdd;
+      let checkBoxSub;
+
+      function setup() {
+        createCanvas(800, 500);
+        
+        //Initialization & constructor call from the setup
+        model = new NumberLineModel(10, 30, width, height);
+        view = new NumberLineView(model);
+        controller = new NumberLineController(model, view);
+
+        //eventListener for reset button
+        const resetButton = document.getElementById("resetButton");
+        resetButton.addEventListener("click", () => controller.handleReset());
+
+         //drawing checkBox
+         checkBoxAdd = createCheckbox("Addition", true);
+         checkBoxAdd.position(250, 380);
+         
+
+        checkBoxSub = createCheckbox("Subtraction", true);
+        checkBoxSub.position(250, 480);
+      }
+
+      function draw() {
+        controller.updateAndDraw();
+      }
+
+      function mousePressed() {
+        controller.handleMousePressed(mouseX, mouseY);
+      }
+
+      function mouseDragged() {
+        controller.handleMouseDragged(mouseX);
+      }
+
+      function mouseReleased() {
+        controller.handleMouseReleased();
+      }
+    </script>
+  </head>
+  <body>
+    <button id="resetButton">Reset to 0</button>
+  </body>
+</html>

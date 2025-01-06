@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Number Line</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+
+    <script defer>
+      let numberLineStart, numberLineEnd;
+      let pointX, pointY;
+      let snappingRange = 30;
+      let range = 10;
+      let dragged = false;
+
+      function setup() {
+        createCanvas(800, 400);
+        numberLineStart = 100;
+        numberLineEnd = width - numberLineStart;
+        pointX = map(0, -range, range, numberLineStart, numberLineEnd);//pointX = 400
+        pointY = height / 2; //pointY = 200
+
+        // Reset button event listener
+        const resetButton = document.getElementById("resetButton");
+        resetButton.addEventListener("click", () => {
+          pointX = map(0, -range, range, numberLineStart, numberLineEnd);
+          console.log(pointX);
+        });
+      }
+
+      function draw() {
+        background(200);
+        drawLine();
+        drawPoint();
+        snapNearest();
+      }
+
+      function drawLine() {
+        // Draw the number line
+        stroke(0);
+        strokeWeight(1);
+        line(numberLineStart, height / 2, numberLineEnd, height / 2);
+
+        // Draw ticks and labels
+        for (let i = -range; i <= range; i++) {
+          let x = map(i, -range, range, numberLineStart, numberLineEnd);
+          console.log(x); //x=100, 130, 160,..........700
+          line(x, height / 2 - 10, x, height / 2 + 10);
+          fill(0);
+          textAlign(CENTER, CENTER);
+          text(i, x, height / 2 + 20);
+        }
+      }
+
+      function drawPoint() {
+        // Draw draggable point
+        fill(255, 0, 0);
+        noStroke();
+        ellipse(pointX, pointY, 15);
+      }
+
+      function snapNearest() {
+        // Snap to the nearest integer
+        if (!dragged) {
+          let nearestValue = round(
+            map(pointX, numberLineStart, numberLineEnd, -range, range)
+          );
+          pointX = map(
+            nearestValue,
+            -range,
+            range,
+            numberLineStart,
+            numberLineEnd
+          );
+
+          // Display the integer value
+          fill(0);
+          textSize(16);
+          textAlign(CENTER, CENTER);
+          text(nearestValue, width / 2, height / 2 - 40);
+        }
+      }
+
+      function mousePressed() {
+        let d = dist(mouseX, mouseY, pointX, pointY);
+        if (d < snappingRange) {
+          dragged = true;
+        }
+      }
+
+      function mouseDragged() {
+        if (dragged) {
+          pointX = constrain(mouseX, numberLineStart, numberLineEnd);
+        }
+      }
+
+      function mouseReleased() {
+        dragged = false;
+      }
+    </script>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f9f9f9;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="sketch.js"></script>
+    <button id="resetButton">Reset to 0</button>
+  </body>
+</html>
