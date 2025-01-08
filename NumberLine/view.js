@@ -53,7 +53,10 @@ class NumberLineView {
        //for animating line
        this.arrowX = lerp(this.arrowX, centerPixel, this.animationSpeed);
 
-        if(checkBoxAdd.checked()){
+       const checkBoxAdd = document.getElementById("pendulum");
+       const checkBoxSub = document.getElementById("pendulum2");
+
+        if(checkBoxAdd.checked){
         //draw addition line and arrow
             stroke(0, 200, 0);
             strokeWeight(2);
@@ -89,7 +92,7 @@ class NumberLineView {
         }
 
         //draw subtraction line and arrow
-        if(checkBoxSub.checked()){
+        if(checkBoxSub.checked){
             stroke(200, 0, 0);
             strokeWeight(2);
             if (subtractionValue < -this.model.range) {

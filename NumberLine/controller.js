@@ -39,7 +39,7 @@
     }
 
     updateAndDraw(){
-        background(200);
+        background(255);
         this.view.drawNumberLine();
         this.view.drawPoint();
         this.view.drawArrow();

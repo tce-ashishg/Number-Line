@@ -1,3 +1,4 @@
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -19,8 +20,9 @@
       let checkBoxSub;
 
       function setup() {
-        createCanvas(800, 500);
-        
+        let canvas = createCanvas(800, 500);
+        canvas.parent("mainCanvas");
+
         //Initialization & constructor call from the setup
         model = new NumberLineModel(10, 30, width, height);
         view = new NumberLineView(model);
@@ -31,12 +33,12 @@
         resetButton.addEventListener("click", () => controller.handleReset());
 
          //drawing checkBox
-         checkBoxAdd = createCheckbox("Addition", true);
-         checkBoxAdd.position(250, 380);
+        //  checkBoxAdd = createCheckbox("Addition", true);
+        //  checkBoxAdd.position(250, 380);
          
 
-        checkBoxSub = createCheckbox("Subtraction", true);
-        checkBoxSub.position(250, 480);
+        // checkBoxSub = createCheckbox("Subtraction", true);
+        // checkBoxSub.position(250, 480);
       }
 
       function draw() {
@@ -57,6 +59,28 @@
     </script>
   </head>
   <body>
-    <button id="resetButton">Reset to 0</button>
+    <div class="mainContainerOuter">
+      <div class="wdgetTitle">
+        <h2>NumberLine</h2>
+        <!-- <span id="versionId" class="versionText">{{versionAndTime}}</span> -->
+    </div>
+      <div class="mainContainer" id="mainCanvas">
+
+      </div>
+    <div class="flexContainer">
+      <div class="flexItem">        
+        <input type="checkbox" id="pendulum">
+        <label id="pendulum-chalkA" for="pendulum">Addition</label> 
+      </div>
+
+      <div class="flexItem">        
+        <input type="checkbox" id="pendulum2">
+        <label id="pendulum-chalkB" for="pendulum2">Subtraction</label> 
+      </div>
+      
+      <button id="resetButton" class="btn">Reset to 0</button>
+    </div>
+</div>
+
   </body>
 </html>
