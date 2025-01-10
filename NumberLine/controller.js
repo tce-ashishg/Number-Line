@@ -41,8 +41,8 @@
     updateAndDraw(){
         background(255);
         this.view.drawNumberLine();
-        this.view.drawPoint();
         this.view.drawArrow();
+        this.view.drawPoint();
         const nearestValue = this.model.snapToNearest();
         this.view.displayNearestValue(nearestValue);
     }
